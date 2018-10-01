@@ -187,13 +187,15 @@ class API(object):
                     "for {} minutes.".format(sleep_minutes))
                 time.sleep(sleep_minutes * 60)
             elif response.status_code == 400:
-                response_data = json.loads(response.text)
-                msg = "Instagram's error message: {}"
-                self.logger.info(msg.format(response_data.get('message')))
-                if 'error_type' in response_data:
-                    msg = 'Error type: {}'.format(response_data['error_type'])
-                    self.logger.info(msg)
-
+                try:
+                    response_data = json.loads(response.text)
+                    msg = "Instagram's error message: {}"
+                    self.logger.info(msg.format(response_data.get('message')))
+                    if 'error_type' in response_data:
+                        msg = 'Error type: {}'.format(response_data['error_type'])
+                        self.logger.info(msg)
+                except JSONDecodeError:
+                    self.logger.info(response.text)
             # For debugging
             try:
                 self.last_response = response
