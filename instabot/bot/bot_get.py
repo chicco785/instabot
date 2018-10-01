@@ -153,7 +153,6 @@ def get_user_id_from_username(self, username):
         self.api.search_users(username)
         self.very_small_delay()
         if "users" in self.api.last_json:
-            print(self.api.last_json)
             if self.api.last_json["num_results"] == 1: 
                 self._usernames[username] = str(self.api.last_json["users"][0]["pk"])
             elif self.api.last_json["num_results"] == 0:
