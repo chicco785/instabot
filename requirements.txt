@@ -10,3 +10,5 @@ responses
 future
 six
 huepy
+sqlalchemy
+schedule
