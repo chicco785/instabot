@@ -7,6 +7,9 @@ secret.txt
 # Files with downloaded data
 *.tsv
 
+# Fede's conf
+conf
+
 # Photos
 examples/photos/
 
