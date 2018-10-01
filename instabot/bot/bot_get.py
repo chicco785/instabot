@@ -150,10 +150,18 @@ def get_geotag_users(self, geotag):
 
 def get_user_id_from_username(self, username):
     if username not in self._usernames:
-        self.api.search_username(username)
+        self.api.search_users(username)
         self.very_small_delay()
-        if "user" in self.api.last_json:
-            self._usernames[username] = str(self.api.last_json["user"]["pk"])
+        if "users" in self.api.last_json:
+            print(self.api.last_json)
+            if self.api.last_json["num_results"] == 1: 
+                self._usernames[username] = str(self.api.last_json["users"][0]["pk"])
+            else if self.api.last_json["num_results"] == 0:
+                return None
+            else:
+                for user in self.api.last_json["users"]:
+                    if user["username"] == username:
+                        self._usernames[username] = user["pk"]
         else:
             return None
     return self._usernames[username]
